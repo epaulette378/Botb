@@ -1,0 +1,73 @@
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.binance.BinanceExchange;
+import org.knowm.xchange.binance.dto.trade.BinanceOrder;
+import org.knowm.xchange.binance.service.BinanceTradeService;
+import org.knowm.xchange.currency.Currency;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.account.AccountInfo;
+import org.knowm.xchange.service.account.AccountService;
+import org.knowm.xchange.service.trade.TradeService;
+import org.knowm.xchange.service.trade.params.orders.OpenOrdersParamCurrencyPair;
+import org.knowm.xchange.service.trade.params.orders.OpenOrdersParams;
+import org.knowm.xchange.service.trade.params.orders.OpenOrdersParamsMarket;
+import org.knowm.xchange.service.trade.params.orders.OpenOrdersParamsStatus;
+import org.knowm.xchange.utils.CertHelper;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+public class CryptoTradingBot {
+
+    public static void main(String[] args) throws IOException {
+        CertHelper.trustAllCertificates();
+
+        // Создание экземпляра биржи (здесь используется Binance, но можно выбрать другую)
+        Exchange exchange = ExchangeFactory.INSTANCE.createExchange(BinanceExchange.class.getName());
+
+        // Получение сервисов для работы с аккаунтом и торговлей
+        AccountService accountService = exchange.getAccountService();
+        TradeService tradeService = exchange.getTradeService();
+
+        // Получение информации об аккаунте
+        AccountInfo accountInfo = accountService.getAccountInfo();
+        System.out.println("Баланс аккаунта: " + accountInfo);
+
+        // Получение открытых ордеров
+        OpenOrdersParams openOrdersParams = new OpenOrdersParamsMarket(CurrencyPair.BTC_USDT);
+        List<BinanceOrder> openOrders = tradeService.getOpenOrders(openOrdersParams);
+        System.out.println("Открытые ордеры: " + openOrders);
+
+        // Размещение ордера на покупку
+        CurrencyPair currencyPair = new CurrencyPair(Currency.BTC, Currency.USDT);
+        BigDecimal price = new BigDecimal("40000");
+        BigDecimal quantity = new BigDecimal("0.001");
+        BinanceOrder buyOrder = tradeService.placeLimitOrder(currencyPair, BinanceOrder.BinanceOrderType.LIMIT, BinanceOrder.BinanceTimeInForce.GTC, quantity, price);
+        System.out.println("Ордер на покупку размещен: " + buyOrder);
+
+        // Засыпаем на 5 секунд
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Отмена ордера на покупку
+        tradeService.cancelOrder(buyOrder.getId());
+        System.out.println("Ордер на покупку отменен: " + buyOrder);
+
+        // Засыпаем на 5 секунд
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Размещение ордера на продажу
+        BinanceOrder sellOrder = tradeService.placeMarketOrder(new BinanceTradeService.BinancePlaceOrder(
+                CurrencyPair.BTC_USDT, BinanceOrder.BinanceOrderSide.SELL, null, null, quantity, null, null));
+        System.out.println("Ордер на продажу размещен: " + sellOrder);
+    }
+}
