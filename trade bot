@@ -9,9 +9,7 @@ import org.knowm.xchange.dto.account.AccountInfo;
 import org.knowm.xchange.service.account.AccountService;
 import org.knowm.xchange.service.trade.TradeService;
 import org.knowm.xchange.service.trade.params.orders.OpenOrdersParamCurrencyPair;
-import org.knowm.xchange.service.trade.params.orders.OpenOrdersParams;
-import org.knowm.xchange.service.trade.params.orders.OpenOrdersParamsMarket;
-import org.knowm.xchange.service.trade.params.orders.OpenOrdersParamsStatus;
+
 import org.knowm.xchange.utils.CertHelper;
 
 import java.io.IOException;
