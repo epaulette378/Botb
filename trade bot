@@ -28,6 +28,24 @@ import org.knowm.xchange.binance.service.BinanceTradeService;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.account.AccountInfo;
+import org.knowm.xchange.service.account.AccountService;rg.knowm.xchange.service.trade.params.orders.OpenOrdersParamCurrencyPair;
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.binance.BinanceExchange;
+import org.knowm.xchange.binance.dto.trade.BinanceOrder;
+import org.knowm.xchange.binance.service.BinanceTradeService;
+import org.knowm.xchange.currency.Currency;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.account.AccountInfo;
+import org.knowm.xchange.service.account.AccountService;rg.knowm.xchange.service.trade.params.orders.OpenOrdersParamCurrencyPair;
+import org.knowm.xchange.Exchange;
+import org.knowm.xchange.ExchangeFactory;
+import org.knowm.xchange.binance.BinanceExchange;
+import org.knowm.xchange.binance.dto.trade.BinanceOrder;
+import org.knowm.xchange.binance.service.BinanceTradeService;
+import org.knowm.xchange.currency.Currency;
+import org.knowm.xchange.currency.CurrencyPair;
+import org.knowm.xchange.dto.account.AccountInfo;
 import org.knowm.xchange.service.account.AccountService;
 import org.knowm.xchange.service.trade.TradeService;
 import org.knowm.xchange.service.trade.params.orders.OpenOrdersParamCurrencyPair;
@@ -45,6 +63,11 @@ public class CryptoTradingBot {
         CertHelper.trustAllCertificates();
 
         // Создание экземпляра биржи (здесь используется Binance, но можно выбрать другую)
+        Exchange exchange = ExchangeFactory.INSTANCE.createExchange(BinanceExchange.class.getName());
+
+        // Получение сервисов для работы с аккаунтом и торговлей
+        AccountService accountService = exchange.getAccountService();
+        TradeService tradeService = exchange.getTradeService();
         Exchange exchange = ExchangeFactory.INSTANCE.createExchange(BinanceExchange.class.getName());
 
         // Получение сервисов для работы с аккаунтом и торговлей
@@ -72,22 +95,4 @@ public class CryptoTradingBot {
             TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
 
-        // Отмена ордера на покупку
-        tradeService.cancelOrder(buyOrder.getId());
-        System.out.println("Ордер на покупку отменен: " + buyOrder);
-
-        // Засыпаем на 5 секунд
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // Размещение ордера на продажу
-        BinanceOrder sellOrder = tradeService.placeMarketOrder(new BinanceTradeService.BinancePlaceOrder(
-                CurrencyPair.BTC_USDT, BinanceOrder.BinanceOrderSide.SELL, null, null, quantity, null, null));
-        System.out.println("Ордер на продажу размещен: " + sellOrder);
-    }
-}
