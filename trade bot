@@ -39,14 +39,3 @@ import org.knowm.xchange.utils.CertHelper
         AccountInfo accountInfo = accountService.getAccountInfo();
         System.out.println("Баланс аккаунта: " + accountInfo);
 
-        // Получение открытых ордеров
-        OpenOrdersParams openOrdersParams = new OpenOrdersParamsMarket(CurrencyPair.BTC_USDT);
-        List<BinanceOrder> openOrders = tradeService.getOpenOrders(openOrdersParams);
-        System.out.println("Открытые ордеры: " + openOrders);
-
-        // Размещение ордера на покупку
-        CurrencyPair currencyPair = new CurrencyPair(Currency.BTC, Currency.USDT);
-        BigDecimal price = new BigDecimal("40000");
-        BigDecimal quantity = new BigDecimal("0.001");
-        BinanceOrder buyOrder = tradeService.placeLimitOrder(currencyPair, BinanceOrder.BinanceOrderType.LIMIT, BinanceOrder.BinanceTimeInForce.GTC, quantity, price);
-        System.out.println("Ордер на покупку размещен: " + buyOrder
