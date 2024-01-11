@@ -38,4 +38,6 @@ import org.knowm.xchange.utils.CertHelper
 } Получение информации об аккаунте
         AccountInfo accountInfo = accountService.getAccountInfo();
         System.out.println("Баланс аккаунта: " + accountInfo);
-
+it.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
