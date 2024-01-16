@@ -6,11 +6,6 @@ import org.knowm.xchange.binance.service.BinanceTradeService;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.account.AccountInfo;
-import org.knowm.xchange.service.account.AccountService;
-import org.knowm.xchange.service.trade.TradeService;
-import org.knowm.xchange.service.trade.params.orders.OpenOrdersParams;
-import org.knowm.xchange.service.trade.params.orders.OpenOrdersParamsMarket;
-import org.knowm.xchange.utils.CertHelper
 
         // Получение информации об аккаунте
         AccountInfo accountInfo = accountService.getAccountInfo();
