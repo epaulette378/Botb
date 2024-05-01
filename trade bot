@@ -7,15 +7,6 @@ import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.account.AccountInfo;
 
-        // Получение информации об аккаунте
-        AccountInfo accountInfo = accountService.getAccountInfo();
-        System.out.println("Баланс аккаунта: " + accountInfo);
-
-        // Получение открытых ордеров
-        OpenOrdersParams openOrdersParams = new OpenOrdersParamsMarket(CurrencyPair.BTC_USDT);
-        List<BinanceOrder> openOrders = tradeService.getOpenOrders(openOrdersParams);
-        System.out.println("Открытые ордеры: " + openOrders);
-
         // Размещение ордера на покупку
         CurrencyPair currencyPair = new CurrencyPair(Currency.BTC, Currency.USDT);
         BigDecimal price = new BigDecimal("40000");
