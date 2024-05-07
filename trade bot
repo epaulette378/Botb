@@ -8,13 +8,7 @@ import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.account.AccountInfo;
 
         // Размещение ордера на покупку
-        CurrencyPair currencyPair = new CurrencyPair(Currency.BTC, Currency.USDT);
-        BigDecimal price = new BigDecimal("40000");
-        BigDecimal quantity = new BigDecimal("0.001");
-        BinanceOrder buyOrder = tradeService.placeLimitOrder(currencyPair, BinanceOrder.BinanceOrderType.LIMIT, BinanceOrder.BinanceTimeInForce.GTC, quantity, price);
-        System.out.println("Ордер на покупку размещен: " + buyOrder);
-
-        // Засыпаем на 5 секунд
+        Cur
         try {
             TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
