@@ -7,14 +7,7 @@ import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.account.AccountInfo;
 
-        // Размещение ордера на покупку
-        Cur
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            e.printSta
-        // Получение информации об аккаунте
-        AccountInfo accountInfo = accountService.getAccountInfo();
+       rvice.getAccountInfo();
         System.out.println("Баланс аккаунта: " + accountInfo);
 
         // Получение открытых ордеров
