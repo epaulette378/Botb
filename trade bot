@@ -10,10 +10,7 @@ import org.knowm.xchange.dto.account.AccountInfo;
        rvice.getAccountInfo();
         System.out.println("Баланс аккаунта: " + accountInfo);
 
-        // Получение открытых ордеров
-        OpenOrdersParams openOrdersParams = new OpenOrdersParamsMarket(CurrencyPair.BTC_USDT);
-        List<BinanceOrder> openOrders = tradeService.g
-        BigDecimal quantity = new BigDecimal("0.001");
+        // Полу
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
